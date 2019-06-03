@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CRUDCore.DAL.Entities;
 using CRUDCore.Pages;
@@ -22,6 +23,7 @@ namespace CRUDCore.Controllers
         [HttpGet]
         public List<UserItemViewModel> GetUsers()
         {
+            Thread.Sleep(5000);
             var model = new List<UserItemViewModel>
             {
                 new UserItemViewModel
