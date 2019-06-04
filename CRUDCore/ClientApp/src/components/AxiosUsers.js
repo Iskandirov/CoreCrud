@@ -33,13 +33,16 @@ class AxiosUsers extends Component {
         console.log('----render----', this.state);
         const content = list.map(item => {
             console.log('------Item render------', item);
-            return <li key={item.Id}></li>
+            return <li key={item.Id}>{item.email}</li>
         });
         return (
             <div>
                 <h1>
                     Axios Users Component
                 </h1>
+                <ul>
+                    {content}
+                </ul>
                 <div className={classnames('modal', { 'open': loading })}>
                     <div className="position-center">
                         <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>

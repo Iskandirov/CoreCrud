@@ -9,16 +9,7 @@ namespace CRUDCore.DAL.Entities
 {
     public class SeederDB
     {
-        public static void SeedDataByAS(IServiceProvider services)
-        {
-
-            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var manager = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
-                var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
-                SeederDB.SeedData(manager, managerRole);
-            }
-        }
+       
 
         public static void SeedData(UserManager<DbUser> userManager,
          RoleManager<DbRole> roleManager)
@@ -42,6 +33,17 @@ namespace CRUDCore.DAL.Entities
                 }).Result;
 
                 result = userManager.AddToRoleAsync(user, roleName).Result;
+            }
+        }
+
+        public static void SeedDataByAS(IServiceProvider services)
+        {
+
+            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var manager = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+                var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
+                SeederDB.SeedData(manager, managerRole);
             }
         }
     }
