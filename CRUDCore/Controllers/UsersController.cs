@@ -30,6 +30,9 @@ namespace CRUDCore.Controllers
                 {
                     Id = 1,
                     Email ="jon@gg.ss",
+                    Image = "https://ukr-space.com/wp-content/uploads/2017/04/Vintonyak-e1492516048779.jpg",
+                    Age = 20,
+                    Workplace = "PHP admin",
                     Roles = new List<RoleItemViewModel>
                     {
                         new RoleItemViewModel {Id = 2,Name="Admin"}
@@ -39,6 +42,9 @@ namespace CRUDCore.Controllers
                 {
                     Id = 2,
                     Email ="bombelyk@gg.ss",
+                    Image = "http://protruskavets.org.ua/protrusk/wp-content/gallery/divchyna-zhovtnya-2012/1.jpg",
+                    Age = 22,
+                    Workplace = "Unity 3d game dev",
                     Roles = new List<RoleItemViewModel>
                     {
                         new RoleItemViewModel {Id = 2,Name="Admin"},

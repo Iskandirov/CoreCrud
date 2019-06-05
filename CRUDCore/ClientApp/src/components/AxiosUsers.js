@@ -33,7 +33,13 @@ class AxiosUsers extends Component {
         console.log('----render----', this.state);
         const content = list.map(item => {
             console.log('------Item render------', item);
-            return <li key={item.Id}>{item.email}</li>
+            <div class="card">
+                <div class="card-body">
+                    <li key={item.Id}>{item.email}</li>
+                    <li key={item.Id}>{item.Age}</li>
+                    <li key={item.Id}>{item.Workplace}</li>
+                </div>
+            </div>
         });
         return (
             <div>
