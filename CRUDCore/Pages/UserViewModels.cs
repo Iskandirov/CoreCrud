@@ -11,6 +11,7 @@ namespace CRUDCore.Pages
         public string Email { get; set; }
         public string Image { get; set; }
         public int Age { get; set; }
+        public int Phone { get; set; }
         public string Workplace { get; set; }
         public IEnumerable<RoleItemViewModel> Roles { get; set; }
 

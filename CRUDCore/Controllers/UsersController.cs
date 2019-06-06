@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using CRUDCore.DAL.Entities;
 using CRUDCore.Pages;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDCore.Controllers
@@ -16,8 +18,13 @@ namespace CRUDCore.Controllers
     public class UsersController : ControllerBase
     {
         private readonly EFContext _context;
-        public UsersController(EFContext context)
+        private readonly UserManager<DbUser> _userManager;
+        private readonly RoleManager<DbRole> _roleManager;
+        public UsersController(UserManager<DbUser> userManager,
+         RoleManager<DbRole> roleManager, EFContext context)
         {
+            _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
         }
         [HttpGet]
@@ -53,7 +60,50 @@ namespace CRUDCore.Controllers
                 },
             };
             return model;
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody]UserItemViewModel model)
+        {
+            try
+            {
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    DbUser dbUser = new DbUser
+                    {
+                        Email = model.Email,
+                        Age = model.Age,
+                        Phone = model.Phone,
+                        WorkPlace = model.Workplace,
+                        UserName = model.Email,
+                    };
+                    var result = await _userManager.CreateAsync(dbUser, "Qwerty1-");
+                    if (result.Succeeded)
+                    {
+                        throw new Exception("Problem create role!");
+                    }
+                    foreach (var role in model.Roles)
+                    {
+                        var roleresult = await _roleManager.CreateAsync(new DbRole
+                        {
+                            Name = role.Name
+                        });
+                        if (!roleresult.Succeeded)
+                        {
+                            throw new Exception("Problem create role!");
+                        }
+                    }
+                    scope.Complete();
+                    return Ok(dbUser.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
+
 }
+

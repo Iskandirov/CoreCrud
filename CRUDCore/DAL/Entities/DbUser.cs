@@ -11,6 +11,13 @@ namespace CRUDCore.DAL.Entities
     {
         [StringLength(255)]
         public  string Image { get; set; }
+        [Range(0,130,ErrorMessage = "Wrong year")]
+        public int Age { get; set; }
+        [StringLength(255)]
+        public string WorkPlace { get; set; }
+        [StringLength(255)]
+        public int Phone { get; set; }
         public virtual ICollection<DbUserRole> UserRoles { get; set; }
+        
     }
 }
